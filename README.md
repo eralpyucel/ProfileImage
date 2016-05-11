@@ -6,11 +6,6 @@ Capture
   - [Usage](#usage)
     - [IOS](#ios)
     - [Android](#android)
-  - [Features and advantages of this project](#features-and-advantages-of-this-project)
-    - [Alternatives](#alternatives)
-    - [Projects using this library](#projects-using-this-library)
-  - [Am I missing some essential feature?](#am-i-missing-some-essential-feature)
-  - [Contributing](#contributing)
   - [Links](#license)
 
 
@@ -32,12 +27,69 @@ Capture is the ultimate tool for reporting bugs & gathering product feedback.
 
 This generates a changelog to the `CHANGELOG.md` file, with pretty markdown formatting.
 
-### Params
-Type `github_changelog_generator --help` for details.
+###IOS:
 
-For more details about params, read the Wiki page: [**Advanced change log generation examples**](https://github.com/skywinder/github-changelog-generator/wiki/Advanced-change-log-generation-examples)
+####Static Lib Gereklilikleri :
 
-### Params File
+1) App Transportation Security Kapatilmasi
+
+2) Target -> Build Settings -> Arama kismina “other linker flag” yazilip ilgili yere -ObjC -all_load eklenecek.
+
+####AppDelegate.m Dosyasina
+
+```
+#import "MobvenBugReporter.h"
+``` 
+seklinde import edilir. 
+```
+didFinishLaunchingWithOptions
+```
+methodun icinde asagidaki kod eklenir: 
+
+```
+[MobvenBugReporter initializeAppSecret:@"1" appId:@"1" projectId:@"1" in- vokeTypes:@[@(Shake), @(FloatingButton)]];
+```
+
+####Embedded Framework Kullanimi //Objective C // ----------
+
+1) Target-> General -> Embedded Binaries
+Add MobvenBugKit.framework
+
+2) Target -> Build Settings -> Arama kismina “Bitcode” yazilip ilgili yer YES olarak set edilir
+
+3) App Transportation Security Kapatilmasi
+
+####AppDelegate.m Dosyasina:
+```
+#import <MobvenBugKit/MobvenBugKit.h>
+didFinishLaunchingWithOptions
+```
+methodun icinde asagidaki kod eklenir : 
+```
+[MobvenBugReporter initializeAppSecret:@"1" appId:@"1" projectId:@"1" in- vokeTypes:@[@(Shake), @(FloatingButton)]];
+```
+
+####Embedded Framework Kullanimi //Swift // —————
+
+1) Target-> General -> Embedded Binaries
+Add MobvenBugKit.framework
+
+2) Target -> Build Settings -> Arama kismina “Bitcode” yazilip ilgili yer YES olarak set edilir
+
+3) App Transportation Security Kapatilmasi
+
+####AppDelegate Dosyasina:
+```
+import MobvenBugKit
+didFinishLaunchingWithOptions
+```
+methodun icinde asagidaki kod eklenir :
+```
+let types = [NSNumber(unsignedInteger:InvocationType.Shake.rawValue),NSNumber(un- signedInteger:InvocationType.FloatingButton.rawValue)]
+MobvenBugReporter.initializeAppSecret("1", appId: "1", projectId: "1", in- vokeTypes:types)
+```
+
+### For Android
 In your project root, you can put a params file named `.github_changelog_generator` to override default params:
 
 Example:
